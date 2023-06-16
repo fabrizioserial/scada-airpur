@@ -2,7 +2,7 @@ import {createContext, ReactNode, useState} from "react";
 
 interface BoardContextProps {
     board: { [BoardsIDs in string]: BoardType }
-    updateCheckpointPosition: (props:{idBoard: BoardsIDs, idCheckpoint: string, position: {x: number, y: number}}) => void
+    updateCheckpointPosition: (props:{idBoard: BoardsIDs, idCheckpoint: string, position: {x: number, y: number,z:number}}) => void
     getCheckpointByID: ({idBoard,idCheckpoint}:{idBoard: string, idCheckpoint: string}) => CheckPointType
 }
 
@@ -22,6 +22,7 @@ export type CheckPointType = {
     position: {
         x: number
         y: number
+        z:number
     },
     targetId?: string,
     targetAnchor?: AnchorEnum,
@@ -50,7 +51,8 @@ export const BoardProvider = ({children}: BoardProviderProps) => {
                     name: '1',
                     position: {
                         x: 0,
-                        y: 0
+                        y: 0,
+                        z:0
                     },
                     targetId: 'draggable2',
                     targetAnchor: 'top',
@@ -60,8 +62,10 @@ export const BoardProvider = ({children}: BoardProviderProps) => {
                     id: 'draggable2',
                     name: '2',
                     position: {
-                        x: 0,
-                        y: 0
+                        x: 20,
+                        y: 80,
+                        z:0
+
                     },
                     targetId: 'draggable3',
                     targetAnchor: 'top',
@@ -72,7 +76,9 @@ export const BoardProvider = ({children}: BoardProviderProps) => {
                     name: '3',
                     position: {
                         x: 0,
-                        y: 0
+                        y: 0,
+                        z:0
+
                     },
                     targetId: 'draggable4',
                     targetAnchor: 'top',
@@ -83,7 +89,9 @@ export const BoardProvider = ({children}: BoardProviderProps) => {
                     name: '4',
                     position: {
                         x: 0,
-                        y: 0
+                        y: 0,
+                        z:0
+
                     },
                     targetId: undefined,
                     targetAnchor: 'top',
@@ -93,7 +101,7 @@ export const BoardProvider = ({children}: BoardProviderProps) => {
         }
     })
 
-    function updateCheckpointPosition({idBoard, idCheckpoint, position}:{ idBoard: BoardsIDs, idCheckpoint: string, position: { x: number, y: number } }) {
+    function updateCheckpointPosition({idBoard, idCheckpoint, position}:{ idBoard: BoardsIDs, idCheckpoint: string, position: { x: number, y: number,z:number } }) {
         // setBoard({
         //         ...board,
         //         [idBoard]: {
@@ -121,7 +129,7 @@ export const BoardProvider = ({children}: BoardProviderProps) => {
         return board[idBoard].checkpoints.find(checkpoint => checkpoint.id === idCheckpoint) as CheckPointType
     }
 
-    function updateArrowPosition({idBoard,idCheckpoint,position}:{idBoard: string, idCheckpoint: string,position:{x:number,y:number}}){
+    function updateArrowPosition({idBoard,idCheckpoint,position}:{idBoard: string, idCheckpoint: string,position:{x:number,y:number,z:number}}){
         const updateTargetDirection = (position1: {x: number, y: number}, position2: {x: number, y: number}) => {
             if(!position2 || !position1) return 'top'
             if(position1.x === position2.x ) {
@@ -140,7 +148,7 @@ export const BoardProvider = ({children}: BoardProviderProps) => {
             }
         }
 
-        const updateSourceDirection = (position1: {x: number, y: number}, position2: {x: number, y: number}) => {
+        const updateSourceDirection = (position1: {x: number, y: number,z:number}, position2: {x: number, y: number,z:number}) => {
             if(!position2 || !position1) return 'top'
 
             if(position1.x === position2.x ) {
@@ -168,7 +176,8 @@ export const BoardProvider = ({children}: BoardProviderProps) => {
             ...currentCheckpoint,
             position: {
                 x: position.x,
-                y: position.y
+                y: position.y,
+                z: position.z
             },
             sourceAnchor: updateSourceDirection(currentCheckpoint.position, targetCheckpoint?.position),
             targetAnchor: updateTargetDirection(currentCheckpoint?.position, targetCheckpoint?.position),

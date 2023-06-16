@@ -57,6 +57,7 @@ export function DraggableStory({
                     position: {
                         x: context.getCheckpointByID({idBoard:'Top1', idCheckpoint:others.active.id.toString()}).position.x + delta.x,
                         y: context.getCheckpointByID({idBoard:'Top1', idCheckpoint:others.active.id.toString()}).position.y + delta.y,
+                        z: context.getCheckpointByID({idBoard:'Top1', idCheckpoint:others.active.id.toString()}).position.z
                     }
                 })
             }}

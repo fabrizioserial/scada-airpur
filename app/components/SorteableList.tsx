@@ -44,7 +44,9 @@ export function SorteableList() {
                 strategy={verticalListSortingStrategy}
 
             >
-                {items.map(id => <SortableItem key={id} id={id} data={checkpoints.find(node => node.name == id.toString())}/>)}
+                <div className={'flex flex-col gap-3'}>
+                    {items.map(id => <SortableItem key={id} id={id} data={checkpoints.find(node => node.name == id.toString())}/>)}
+                </div>
             </SortableContext>
         </DndContext>
     );
